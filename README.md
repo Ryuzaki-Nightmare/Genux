@@ -1,8 +1,8 @@
-# Tapix
+# Genux
 ## Tapix is an operating system focused on the global open-source market, inspired by Linux. Built entirely from scratch without Vibecode.
 ## folder structures
 ```text
-Tapix/
+Genux/
 ├── .gitignore
 ├── LICENSE
 ├── Makefile
@@ -33,16 +33,17 @@ Tapix/
 ```text
     sudo apt update
     sudo apt install -y make nasm qemu-system-x86 gcc binutils
-    git clone https://github.com/Ryuzaki-Nightmare/Tapix.git 
-    cd Tapix
+    git clone https://github.com/Ryuzaki-Nightmare/Genux.git 
+    cd Genux
     make clean && make run
 ```
-##  Tapix symbol
+##  Genux symbol
 ```
-  ______            _     
- /_  __/___ _____  (_)  __
-  / / / __ `/ __ \/ / |/_/
- / / / /_/ / /_/ / />  <  
-/_/  \__,_/ .___/_/_/|_|  
-         /_/       
+    ______                     
+  / ____/__  ____  __  ___  __
+ / / __/ _ \/ __ \/ / / / |/_/
+/ /_/ /  __/ / / / /_/ />  <  
+\____/\___/_/ /_/\__,_/_/|_|  
+                              
+      
 ```
