@@ -30,7 +30,7 @@ void vga_putchar(char c) {
         
         shell(); // call func "shell" in kernel/terminal/shell.c
         vga_set_color(VGA_GREEN, VGA_BLACK);
-        vga_print(">");
+        kprintf(">");
      
         memset(teclas,0,sizeof(teclas)); /*Zera array do teclado para comecar dnv a contagem*/
         teclas_count = 0;
@@ -47,7 +47,7 @@ void vga_putchar(char c) {
     vga[cursor++] = (current_color << 8) | c;
 }
 void vga_kputchar(char c) {
-    if(c == '\n'){
+    if(c == '\z'){ // "\n" for new lines with ">"
         cursor = (cursor / VGA_WIDTH + 1) * VGA_WIDTH;
         if (cursor >= VGA_WIDTH * VGA_HEIGHT) {
             cursor = 0;
@@ -55,7 +55,7 @@ void vga_kputchar(char c) {
         vga_print(">");
         return; 
     }
-    if(c == '\z'){ // this is "\n" to shell  commands
+    if(c == '\n'){ // this is to shell  commands
         cursor = (cursor / VGA_WIDTH + 1) * VGA_WIDTH;
         if (cursor >= VGA_WIDTH * VGA_HEIGHT) {
             cursor = 0;
