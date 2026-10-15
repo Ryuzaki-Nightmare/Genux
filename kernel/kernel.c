@@ -30,28 +30,27 @@ void ISRs(void) {
 }
 
 void kernel_main(void) {
-  vga_set_color(VGA_LIGHT_GREEN, VGA_BLACK);
-  vga_print(">"); // pensar em um metodo que printe isso toda vez que apertar
-                  // enter e que seja "inapagavel"
+    vga_set_color(VGA_LIGHT_GREEN, VGA_BLACK);
+  
+    kprintf(">");                   
+    vga_set_color(VGA_WHITE, VGA_BLACK);
 
-  vga_set_color(VGA_WHITE, VGA_BLACK);
+    geral_pic();
+    /*ISRs 1 -> 21 and IRQs*/
+    ISRs();
+    load_IDT();
+    asm volatile("sti");
 
-  geral_pic();
-  /*ISRs 1 -> 21 and IRQs*/
-  ISRs();
-  load_IDT();
-  asm volatile("sti");
+    while (1) {
+        __asm__ volatile("hlt");
+        asm("cli");
 
-  while (1) {
-    __asm__ volatile("hlt");
-    asm("cli");
+        if (last_key != 0) {
+        vga_set_color(VGA_WHITE, VGA_BLACK);
+        vga_putchar(last_key);
 
-    if (last_key != 0) {
-      vga_set_color(VGA_WHITE, VGA_BLACK);
-      vga_putchar(last_key);
-
-      last_key = 0;
+        last_key = 0;
     }
-    asm("sti");
+        asm("sti");
   }
 }
