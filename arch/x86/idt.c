@@ -16,7 +16,7 @@ typedef struct {
 } __attribute__((packed)) idt_entry_t;
 idt_entry_t idt[256];
 
-void set_idt(int vector, void *isr_handler, uint16_t selector, uint8_t flags, uint8_t ist) // Creditos da func  para "doraibu"
+void set_idt(int vector, void *isr_handler, uint16_t selector, uint8_t flags, uint8_t ist) 
 {
     uint64_t handler_addr = (uint64_t)isr_handler;
     
