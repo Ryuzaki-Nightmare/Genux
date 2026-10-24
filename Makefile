@@ -3,7 +3,7 @@ CC = gcc
 SRC_DIR = kernel
 BUILD_DIR = build
 ISO_DIR = iso
-INC_DIR = -Ikernel/libc -Iarch/x86 -Ikernel/terminal
+INC_DIR = -Iinclude -Iarch/x86 -Ikernel/terminal
 #INC_DIR são diretorios que fazem parte da libc para include, por exemplo, #include <stdlib.h>
 log = qemu.log
 
