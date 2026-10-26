@@ -30,4 +30,7 @@ void vga_print(const char* s);
 void vga_backspace(void);
 void vga_newline(void);
 void vga_kputchar(char c);
+void vga_scrool(void);
+void vga_newline(void);
+void vga_put_cell(char c);
 #endif
