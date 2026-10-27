@@ -1,5 +1,5 @@
 # Genux
-## Tapix is an operating system focused on the global open-source market, inspired by Linux. Built entirely from scratch without Vibecode.
+## Genux is an operating system focused on the global open-source market, inspired by Linux. Built entirely from scratch without Vibecode.
 ## folder structures
 ```text
 Genux/
