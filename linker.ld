@@ -1,31 +1,27 @@
 ENTRY(kernel_main)
-
-SECTIONS
-{
-    . = 1M;
-
+SECTIONS{
+    . = 0x100000; 
     .text :
     {
-        *(.multiboot)
+        KEEP(*(.text.kernel_main))
         *(.text)
     }
-    
-
     .rodata :
     {
         *(.rodata)
     }
-
     .data :
     {
         *(.data)
     }
-
     .bss :
     {
-        *(COMMON)
         *(.bss)
     }
-    kernel_end = .;
-    
-}
+        /DISCARD/ :
+    {
+        *(.comment)
+        *(.eh_frame)
+        *(.note.*)
+    }
+} 

@@ -2,7 +2,7 @@ ASM = nasm
 CC = gcc
 SRC_DIR = kernel
 BUILD_DIR = build
-INC_DIR = -Iinclude -Iarch/x86 -Ikernel/terminal
+INC_DIR = -Iinclude -Iarch/x86 -Ikernel/terminal -Iinclude/drivers 
 #INC_DIR são diretorios que fazem parte da libc para include, por exemplo, #include <stdlib.h>
 log = qemu.log
 
@@ -14,8 +14,7 @@ ASM_OBJECTS := $(patsubst %.asm, $(BUILD_DIR)/%.o, $(ASM_SOURCES))
 
 
 #Arquivo de entrada 
-.PHONY:  kernel clean always run
-
+.PHONY:  kernel clean always run 
 all: always
 
 
@@ -36,7 +35,7 @@ Compile:
 	-nostdlib                                \
 	-znocombreloc                            \
 	-T /usr/lib/elf_x86_64_efi.lds        \
-	-shared                                  \
+	-shared                                   \
 	-Bsymbolic                               \
 	-L /usr/lib                        \
 	-l:libgnuefi.a                           \
@@ -67,13 +66,11 @@ $(BUILD_DIR)/%.o: %.c always
 $(BUILD_DIR)/%.o: %.asm always
 	mkdir -p $(dir $@)
 	$(ASM) -f elf64 $< -o $@
-
 kernel: always Compile $(ASM_OBJECTS) $(C_OBJECTS)
-	$(CC) -m64 -ffreestanding -nostdlib -no-pie -T linker.ld \
+	$(CC) -m64 -ffreestanding -nostdlib -no-pie -T linker.ld -Wl,--oformat=binary \
 		$(ASM_OBJECTS) $(C_OBJECTS) \
 		-o $(BUILD_DIR)/Genux.bin
 	cp $(BUILD_DIR)/Genux.bin $(BUILD_DIR)/esp/Genux.bin
- 
 #in run, put -biod /your/path/to/OVM.4m.f
 #in -m, put how many ram you want use
 #in -smp put how many cores you want use
