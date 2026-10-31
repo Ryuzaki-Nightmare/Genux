@@ -1,5 +1,6 @@
 // Func Principal do Kernel
 #include "kernel.h"
+#include "../boot/boot.h"
 volatile char last_key = 0;
 
 void ISRs(void) {
