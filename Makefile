@@ -13,24 +13,12 @@ ASM_SOURCES := $(shell find $(SRC_DIR) arch -name "*.asm")
 ASM_OBJECTS := $(patsubst %.asm, $(BUILD_DIR)/%.o, $(ASM_SOURCES))
 
 
-ENTRY_OBJ := $(BUILD_DIR)/kernel/kernel_entry.o
 #Arquivo de entrada 
 .PHONY:  kernel clean always run
 
-all: Compile
+all: always
 
-kernel: always $(ASM_OBJECTS) $(C_OBJECTS)
-	$(CC) -m64 -ffreestanding -nostdlib -no-pie -T linker.ld \
-		$(ENTRY_OBJ) $(sort $(filter-out $(ENTRY_OBJ), $(ASM_OBJECTS) $(C_OBJECTS))) \
-		-o $(BUILD_DIR)/kernel.bin
 
-$(BUILD_DIR)/%.o: %.asm always
-	mkdir -p $(dir $@)
-	$(ASM) $< -f elf64 -o $@
-
-$(BUILD_DIR)/%.o: %.c always
-	mkdir -p $(dir $@)
-	$(CC) -m64 -ffreestanding -fno-stack-protector $(INC_DIR) -nostdlib -c $< -o $@ 
 Compile: 
 	mkdir -p build
 	$ gcc boot/boot.c                \
@@ -69,11 +57,27 @@ Compile:
 	mkdir -p build/esp/EFI/BOOT
 	cp $(BUILD_DIR)/boot.efi build/esp/EFI/BOOT/BOOTX64.EFI
 	rm -f boot.o
+always:
+	mkdir -p $(BUILD_DIR)
 
+$(BUILD_DIR)/%.o: %.c always
+	mkdir -p $(dir $@)
+	$(CC) -m64 -ffreestanding -fno-stack-protector $(INC_DIR) -nostdlib -c $< -o $@
+
+$(BUILD_DIR)/%.o: %.asm always
+	mkdir -p $(dir $@)
+	$(ASM) -f elf64 $< -o $@
+
+kernel: always Compile $(ASM_OBJECTS) $(C_OBJECTS)
+	$(CC) -m64 -ffreestanding -nostdlib -no-pie -T linker.ld \
+		$(ASM_OBJECTS) $(C_OBJECTS) \
+		-o $(BUILD_DIR)/Genux.bin
+	cp $(BUILD_DIR)/Genux.bin $(BUILD_DIR)/esp/Genux.bin
+ 
 #in run, put -biod /your/path/to/OVM.4m.f
 #in -m, put how many ram you want use
 #in -smp put how many cores you want use
-run: all
+run: kernel
 	qemu-system-x86_64 \
 	-m 16G \
 	-smp 8 \
@@ -84,7 +88,7 @@ run: all
 	-D qemu.log \
 	-M smm=off  \
 	-no-reboot \
-	-no-shutdown \
+	-no-shutdown
 
 
 
