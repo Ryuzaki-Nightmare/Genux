@@ -79,13 +79,13 @@ EFI_STATUS Load_Kernel(EFI_FILE_PROTOCOL *Root,EFI_FILE_PROTOCOL **KernelFile){
         5,
         Root,
         KernelFile,
-        L"\\kernel.bin",
+        L"\\Genux.bin",
         EFI_FILE_MODE_READ,
         EFI_FILE_READ_ONLY
      );
 
     if(EFI_ERROR(Status)){
-        Print(L"Error in  Open: %r (Cod: %X)\n",Status,Status);
+        Print(L"Error in Load Kernel: %r (Cod: %X)\n",Status,Status);
         return Status; //Return error if can't load the  kernel
     }
     
