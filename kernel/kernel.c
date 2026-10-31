@@ -29,7 +29,7 @@ void ISRs(void) {
   set_idt(33, irq1asm, 0x8, 0x8e, 0);
 }
 
-void kernel_main(void) {
+void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
     vga_set_color(VGA_LIGHT_GREEN, VGA_BLACK);
   
     kprintf(">");                   
