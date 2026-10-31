@@ -2,7 +2,7 @@
 #define IDT_H
 
 #include <stdint.h>
-#include <vga.h>
+#include <gop.h>
 #include <stdbool.h>
 
 extern void load_IDT(void);

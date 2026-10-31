@@ -1,7 +1,7 @@
 #ifndef STDIO_H
 #define STDIO_H
 #include <string.h>
-#include <vga.h>
+#include <gop.h>
 #include <stdarg.h>
 #include <limits.h>
 #include <stdbool.h>

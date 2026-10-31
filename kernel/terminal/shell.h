@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <keyboard.h>
 #include <stdlib.h>
-#include <vga.h>
+#include <gop.h>
 void shell(void);
 
 #endif

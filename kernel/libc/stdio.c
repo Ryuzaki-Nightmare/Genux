@@ -37,7 +37,7 @@ int kprintf(const char* restrict format, ...)
     while(*format != '\0'){
         if(*format != '%')
         {
-            vga_kputchar(*format);
+            kputchar(*format);
         }
         if(*format == '%')
         {
@@ -47,7 +47,7 @@ int kprintf(const char* restrict format, ...)
                     char *s = itoap(num,10); 
                     // s e o ponteiro que o itoa (que está em stdlib.h ) devolve de int para este ponteiro 
                     while(*s != '\0'){
-                        vga_kputchar(*s);
+                        kputchar(*s);
                         s++;
                     }
                     format++;
@@ -55,11 +55,11 @@ int kprintf(const char* restrict format, ...)
                 else if(format[1] == 'c' )
                 {
                     int cha = (char)va_arg(args,int);
-                    vga_kputchar(cha);
+                    kputchar(cha);
                 }
                 else if(format[1] == 's'){
                     char *str = va_arg(args,char*);
-                    vga_print(str);
+                    print(str);
                 }
                 else if(format[1] == 'f'){
                     

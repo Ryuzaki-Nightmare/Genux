@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <vga.h>
+#include <gop.h>
 #include <keyboard.h>
 #include <string.h>
 #include <pmm.h>
