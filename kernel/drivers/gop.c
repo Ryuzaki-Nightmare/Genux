@@ -1,34 +1,52 @@
 #include <gop.h>
+#define X 16
+#define Y 8
+/*GOP VARIABLES*/
+uint32_t Version;
+uint32_t Width;
+uint32_t Height;
+EFI_GRAPHICS_PIXEL PixelFormat;
+EFI_PIXEL_MASK PixelInformation;
+Uint64_t FrameBufferBase;
+UINTN FrameBufferSize;
+uint32_t PixelsPerScanLine; 
+uint32_t* FrameBuffer;
+uint32_t color;
 
-#define VGA_WIDTH 80
-#define VGA_HEIGHT 25
-
-static volatile uint16_t* const vga = (uint16_t*)0xB8000;
-static uint8_t current_color = (VGA_RED | (VGA_BLACK << 4));
-
-static uint16_t cursor;
-static uint16_t prompt_start = 0;
-void set_color(uint8_t fg, uint8_t bg) {
-    current_color = fg | (bg << 4);
+void gop(EFI_GOP_INFORMATION *gop){
+    Version = gop->Version;
+    Width = gop->WidthResolution;
+    Height = gop->HeightResolution;
+    PixelFormat = gop->PixelFormat;
+    PixelsPerScanLine = gop->PixelsPerScanLine;
+    PixelInformation = gop->PixelInformation;
+    FrameBufferBase = gop->FrameBufferBase;
+    FrameBufferSize = gop->FrameBufferSize;
 }
-
+/*
+ *GOP OFFSET
+ *Offset in Bytes = (Y * PixelsPerScanLine + X) * 4
+ * */
+void init_console(void){
+    FrameBuffer = (uint32_t *) FrameBufferBase;
+    set_color(WHITE);
+}
+void set_color(uint64_t colour){
+    colour = color;
+}
 void gop_putchar(char c) {
     if (c == 8) {  // backspace
-        if (cursor > prompt_start) {
-            cursor--;
-            vga[cursor] = (current_color << 8) | ' ';
-            if(teclas_count > 0)
-                teclas[--teclas_count] = 0;
-        }
+    
         return;
     }
+
+    
 
     if (c == 13) {  // enter
         newline();
         shell(); // call func "shell" in kernel/terminal/shell.c
-        set_color(VGA_GREEN, VGA_BLACK);
+        set_color(GREEN);
         kprintf(">");
-        prompt_start = cursor;
         memset(teclas,0,sizeof(teclas)); /*Zera array do teclado para comecar dnv a contagem*/
         teclas_count = 0;
         
@@ -36,32 +54,29 @@ void gop_putchar(char c) {
 
     }
     if (c == 9) {  // tab   go to next  multiple of  4
-        do {
-            vga[cursor++] = (current_color << 8) | ' ';
-        } while (cursor % 4 != 0);
+        
         return;
     }
-    vga[cursor++] = (current_color << 8) | c;
-}
+  }
 void kputchar(char c) {
-    if(c == '\z'){ // "\n" for new lines with ">"
-        newline();
-        print(">");
-        prompt_start = cursor;
-        return; 
-    }
-    if(c == '\n'){ // this is to shell  commands
-        cursor = (cursor / VGA_WIDTH + 1) * VGA_WIDTH;
-        if (cursor >= VGA_WIDTH * VGA_HEIGHT) {
-            cursor = 0;
+    uint32_t byte_line;
+    uint32_t pixel_x;
+    uint32_t pixel_y;
+    for(int i = 0 ;i < 16;i++){
+        uint8_t byte_line = font[(unsigned char)c][i];
+        for(int bit = 7; bit >= 0 ; bit--){
+            if(((byte_line >> bit)& 1 ) == 1) {
+                pixel_x = X + (7-bit);
+                pixel_y = Y + i;
+
+                plot_pixel(pixel_x,pixel_y);
+            }
         }
-        
-        return; 
     }
-    vga[cursor++] = (current_color << 8) | c;
-    if (cursor >= VGA_WIDTH * VGA_HEIGHT) {
-        cursor = 0;
-    }
+}
+void plot_pixel(uint32_t x,uint32_t y){
+    uint32_t offset = (y* PixelsPerScanLine ) + x;
+    FrameBuffer[offset] = color;
 }
 void print(const char* s) {
     for (int i = 0; s[i]; i++) {
@@ -69,27 +84,11 @@ void print(const char* s) {
     }
 }
  void scroll(void) {
-    
-    for (int i = 0; i < VGA_WIDTH * (VGA_HEIGHT - 1); i++)
-        vga[i] = vga[i + VGA_WIDTH];
 
-   
-    for (int i = VGA_WIDTH * (VGA_HEIGHT - 1); i < VGA_WIDTH * VGA_HEIGHT; i++)
-        vga[i] = (current_color << 8) | ' ';
-
-    cursor = VGA_WIDTH * (VGA_HEIGHT - 1);
-
-
-    prompt_start = (prompt_start >= VGA_WIDTH) ? prompt_start - VGA_WIDTH : 0;
 }
  void newline(void) {
-    cursor = (cursor / VGA_WIDTH + 1) * VGA_WIDTH;
-    if (cursor >= VGA_WIDTH * VGA_HEIGHT)
-        scroll();
+ 
 }
-
  void put_cell(char c) {
-    vga[cursor++] = (current_color << 8) | (uint8_t)c;
-    if (cursor >= VGA_WIDTH * VGA_HEIGHT)
-        scroll();
+ 
 }
