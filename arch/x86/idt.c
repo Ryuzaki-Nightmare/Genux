@@ -32,11 +32,9 @@ void set_idt(int vector, void *isr_handler, uint16_t selector, uint8_t flags, ui
 
 
 
-
-
 extern void isr0(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Division Error");
     asm("cli");
     asm("hlt");
@@ -44,7 +42,7 @@ extern void isr0(void)
 
 extern void isr1(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Debug");
     asm("cli");
     asm("hlt");
@@ -52,7 +50,7 @@ extern void isr1(void)
 
 extern void isr2(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("NMI");
     asm("cli");
     asm("hlt");
@@ -60,7 +58,7 @@ extern void isr2(void)
 
 extern void isr3(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Breakpoint");
     asm("cli");
     asm("hlt");
@@ -68,7 +66,7 @@ extern void isr3(void)
 
 extern void isr4(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Overflow");
     asm("cli");
     asm("hlt");
@@ -76,7 +74,7 @@ extern void isr4(void)
 
 extern void isr5(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Bound Range Exceeded");
     asm("cli");
     asm("hlt");
@@ -84,7 +82,7 @@ extern void isr5(void)
 
 extern void isr6(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Invalid Opcode");
     asm("cli");
     asm("hlt");
@@ -92,7 +90,7 @@ extern void isr6(void)
 
 extern void isr7(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Device Not Available");
     asm("cli");
     asm("hlt");
@@ -100,7 +98,7 @@ extern void isr7(void)
 
 extern void isr8(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Double Fault");
     asm("cli");
     asm("hlt");
@@ -108,7 +106,7 @@ extern void isr8(void)
 
 extern void isr9(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Coprocessor Segment Overrun");
     asm("cli");
     asm("hlt");
@@ -116,7 +114,7 @@ extern void isr9(void)
 
 extern void isr10(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Invalid TSS");
     asm("cli");
     asm("hlt");
@@ -124,7 +122,7 @@ extern void isr10(void)
 
 extern void isr11(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Segment Not Present");
     asm("cli");
     asm("hlt");
@@ -132,7 +130,7 @@ extern void isr11(void)
 
 extern void isr12(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Stack-Segment Fault");
     asm("cli");
     asm("hlt");
@@ -140,7 +138,7 @@ extern void isr12(void)
 
 extern void isr13(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("General Protection Fault");
     asm("cli");
     asm("hlt");
@@ -148,7 +146,7 @@ extern void isr13(void)
 
 extern void isr14(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Page Fault");
     asm("cli");
     asm("hlt");
@@ -156,7 +154,7 @@ extern void isr14(void)
 
 extern void isr15(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Reserved");
     asm("cli");
     asm("hlt");
@@ -164,7 +162,7 @@ extern void isr15(void)
 
 extern void isr16(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("x87 FP Exception");
     asm("cli");
     asm("hlt");
@@ -172,7 +170,7 @@ extern void isr16(void)
 
 extern void isr17(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Alignment Check");
     asm("cli");
     asm("hlt");
@@ -180,7 +178,7 @@ extern void isr17(void)
 
 extern void isr18(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Machine Check");
     asm("cli");
     asm("hlt");
@@ -188,7 +186,7 @@ extern void isr18(void)
 
 extern void isr19(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("SIMD FP Exception");
     asm("cli");
     asm("hlt");
@@ -196,7 +194,7 @@ extern void isr19(void)
 
 extern void isr20(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Virtualization Exception");
     asm("cli");
     asm("hlt");
@@ -204,7 +202,7 @@ extern void isr20(void)
 
 extern void isr21(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("Control Protection Exception");
     asm("cli");
     asm("hlt");
@@ -214,7 +212,7 @@ extern void isr21(void)
 
 extern void irq0(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ0: Timer");
     asm("cli");
     asm("hlt");
@@ -223,7 +221,7 @@ extern void irq0(void)
 
 extern void irq2(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ2: Cascade");
     asm("cli");
     asm("hlt");
@@ -231,7 +229,7 @@ extern void irq2(void)
 
 extern void irq3(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ3: COM2");
     asm("cli");
     asm("hlt");
@@ -239,7 +237,7 @@ extern void irq3(void)
 
 extern void irq4(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ4: COM1");
     asm("cli");
     asm("hlt");
@@ -247,7 +245,7 @@ extern void irq4(void)
 
 extern void irq5(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ5: LPT2/Sound");
     asm("cli");
     asm("hlt");
@@ -255,7 +253,7 @@ extern void irq5(void)
 
 extern void irq6(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ6: Floppy");
     asm("cli");
     asm("hlt");
@@ -263,7 +261,7 @@ extern void irq6(void)
 
 extern void irq7(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ7: LPT1/Spurious");
     asm("cli");
     asm("hlt");
@@ -271,7 +269,7 @@ extern void irq7(void)
 
 extern void irq8(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ8: RTC");
     asm("cli");
     asm("hlt");
@@ -279,7 +277,7 @@ extern void irq8(void)
 
 extern void irq9(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ9: ACPI");
     asm("cli");
     asm("hlt");
@@ -287,7 +285,7 @@ extern void irq9(void)
 
 extern void irq10(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ10: Livre");
     asm("cli");
     asm("hlt");
@@ -295,7 +293,7 @@ extern void irq10(void)
 
 extern void irq11(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ11: Livre");
     asm("cli");
     asm("hlt");
@@ -303,7 +301,7 @@ extern void irq11(void)
 
 extern void irq12(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ12: Mouse PS/2");
     asm("cli");
     asm("hlt");
@@ -311,7 +309,7 @@ extern void irq12(void)
 
 extern void irq13(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ13: FPU");
     asm("cli");
     asm("hlt");
@@ -319,7 +317,7 @@ extern void irq13(void)
 
 extern void irq14(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ14: ATA Primario");
     asm("cli");
     asm("hlt");
@@ -327,8 +325,10 @@ extern void irq14(void)
 
 extern void irq15(void)
 {
-    set_color(VGA_LIGHT_RED, VGA_BLACK);
+    set_color(RED);
     kprintf("IRQ15: ATA Secundario");
     asm("cli");
     asm("hlt");
 }
+
+
