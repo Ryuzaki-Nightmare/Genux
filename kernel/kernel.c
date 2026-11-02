@@ -30,6 +30,9 @@ void IDTs(void) {
 }
 __attribute__((section(".text.kernel_main")))
 void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
+    load_IDT();
+    IDTs();
+    geral_pic();
     gop(Gop);
     init_console();
     uint32_t *fb = (uint32_t *)Gop->FrameBufferBase;
@@ -37,11 +40,9 @@ void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
     for (uint32_t i = 0; i < totalPixels; i++) {
         fb[i] = 0x12456; //powershell classic colorcolor
     }
-    
-    kputchar('a');
-    geral_pic();
-    load_IDT();
-    IDTs();
+    //FAZER ; : !  e todos os sinais restantes em font.h
+    kprintf("Hello World");  
+   
     asm volatile("sti");
         while (1) {
         __asm__ volatile("hlt");

@@ -8,14 +8,14 @@
 #include <boot.h>
 #include <font.h>
 enum Color_Pixel_BGR {
-    RED   =  0x0000FF00U,
-    GREEN = 0xFF000000U,
-    BLUE = 0xFF000000U    ,
-    WHITE = 0xFFFFFF00U,
-    BLACK = 0x00000000U  ,
-    YELLOW = 0x00FFFF00U ,
-    MAGENTA = 0xFF00FF00U ,
-    CYAN   = 0xFFFF0000U
+    RED     = 0x00FF0000U,
+    GREEN   = 0x0000FF00U,
+    BLUE    = 0x000000FFU,
+    WHITE   = 0x00FFFFFFU,
+    BLACK   = 0x00000000U,
+    YELLOW  = 0x00FFFF00U,
+    MAGENTA = 0x00FF00FFU,
+    CYAN    = 0x0000FFFFU
 };
 
 void set_color(uint64_t colour);

@@ -1,6 +1,6 @@
 #include <gop.h>
-#define X 16
-#define Y 8
+uint32_t X = 0;
+uint32_t Y  = -5;
 /*GOP VARIABLES*/
 uint32_t Version;
 uint32_t Width;
@@ -32,7 +32,7 @@ void init_console(void){
     set_color(WHITE);
 }
 void set_color(uint64_t colour){
-    colour = color;
+    color = colour;
 }
 void gop_putchar(char c) {
     if (c == 8) {  // backspace
@@ -62,17 +62,22 @@ void kputchar(char c) {
     uint32_t byte_line;
     uint32_t pixel_x;
     uint32_t pixel_y;
+    if(c == '\n'){
+        newline();
+    }
     for(int i = 0 ;i < 16;i++){
         uint8_t byte_line = font[(unsigned char)c][i];
+        byte_line = byte_line | (byte_line >> 1);
         for(int bit = 7; bit >= 0 ; bit--){
             if(((byte_line >> bit)& 1 ) == 1) {
                 pixel_x = X + (7-bit);
                 pixel_y = Y + i;
-
                 plot_pixel(pixel_x,pixel_y);
+                pixel_x++;
             }
         }
     }
+    X += 8;
 }
 void plot_pixel(uint32_t x,uint32_t y){
     uint32_t offset = (y* PixelsPerScanLine ) + x;
@@ -84,9 +89,10 @@ void print(const char* s) {
     }
 }
  void scroll(void) {
-
 }
  void newline(void) {
+        X = -8;
+        Y += 8;
  
 }
  void put_cell(char c) {
