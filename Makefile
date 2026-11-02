@@ -2,7 +2,7 @@ ASM = nasm
 CC = gcc
 SRC_DIR = kernel
 BUILD_DIR = build
-INC_DIR = -Iinclude -Iarch/x86 -Ikernel/terminal -Iinclude/drivers 
+INC_DIR = -Iinclude -Iarch/x86 -Ikernel/terminal -Iinclude/drivers -Iboot  
 #INC_DIR são diretorios que fazem parte da libc para include, por exemplo, #include <stdlib.h>
 log = qemu.log
 
