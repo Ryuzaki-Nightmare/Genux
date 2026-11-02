@@ -1,8 +1,8 @@
 // Kernel Main Archive
 #include "kernel.h"
-#include "../boot/boot.h"
+#include <boot.h>
 volatile char last_key = 0;
-void ISRs(void) {
+void IDTs(void) {
 
   set_idt(0, isr0asm, 0x08, 0x8E, 0);
   set_idt(1, isr1asm, 0x08, 0x8E, 0);
@@ -28,19 +28,31 @@ void ISRs(void) {
   set_idt(21, isr21asm, 0x08, 0x8e, 0);
   set_idt(33, irq1asm, 0x8, 0x8e, 0);
 }
-
 __attribute__((section(".text.kernel_main")))
 void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
+    gop(Gop);
+    init_console();
     uint32_t *fb = (uint32_t *)Gop->FrameBufferBase;
     uint32_t totalPixels = Gop->PixelsPerScanLine * Gop->HeightResolution;
     for (uint32_t i = 0; i < totalPixels; i++) {
-        fb[i] = 0x00FF0000; //red
+        fb[i] = 0x12456; //powershell classic colorcolor
     }
-    while (1) { asm volatile("hlt"); }
+    
+    kputchar('a');
     geral_pic();
-    /*ISRs 1 -> 21 and IRQs*/
-    ISRs();
     load_IDT();
+    IDTs();
     asm volatile("sti");
- 
+        while (1) {
+        __asm__ volatile("hlt");
+        asm("cli");
+
+        if (last_key != 0) {
+        set_color(WHITE);
+        gop_putchar(last_key);
+
+        last_key = 0;
+    }
+        asm("sti");
+  } 
 }
