@@ -282,7 +282,7 @@ EFI_STATUS efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
     uefi_call_wrapper(SystemTable->ConOut->ClearScreen, 1, SystemTable->ConOut); //CLEAR THE SCREEN
     EFI_SIMPLE_FILE_SYSTEM_PROTOCOL *FileSystem = NULL;
     Print(L"Welcome to Genux Bootloader!\n");
-    uefi_call_wrapper(SystemTable->BootServices->Stall, 1, 3000000);
+
     uefi_call_wrapper(SystemTable->ConOut->ClearScreen, 1, SystemTable->ConOut); 
     gop();
     uefi_call_wrapper(SystemTable->ConOut->ClearScreen, 1, SystemTable->ConOut); 
