@@ -303,12 +303,8 @@ EFI_STATUS efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
     close(KernelFile);
     
     Print(L"Bye Bye Efi\n");
-    uefi_call_wrapper(SystemTable->BootServices->Stall, 1, 3000000);
 
     uefi_call_wrapper(SystemTable->ConOut->ClearScreen, 1, SystemTable->ConOut); //clear the screen to kernel
-    Print(L"FrameBufferBase: %lx\n", info.FrameBufferBase);
-    Print(L"PixelsPerScanLine: %d\n", info.PixelsPerScanLine);
-    Print(L"HeightResolution: %d\n", info.HeightResolution);
     map_key();
     EFI_STATUS Status = uefi_call_wrapper(
         BS->ExitBootServices,
