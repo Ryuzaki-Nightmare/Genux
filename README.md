@@ -1,4 +1,5 @@
 # Genux
+## THIS VERSION IS THE LAST VERSION USIN GRUB HOW BOOTLOADER!!!!, IT'S LEGACY
 ## Genux is an operating system focused on the global open-source market, inspired by Linux. Built entirely from scratch without Vibecode.
 ## folder structures
 ```text
