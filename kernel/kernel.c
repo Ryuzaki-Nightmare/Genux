@@ -2,6 +2,7 @@
 #include "kernel.h"
 #include <boot.h>
 volatile char last_key = 0;
+extern void load_GDT();
 void IDTs(void) {
 
   set_idt(0, isr0asm, 0x08, 0x8E, 0);
@@ -26,34 +27,30 @@ void IDTs(void) {
   set_idt(19, isr19asm, 0x08, 0x8e, 0);
   set_idt(20, isr20asm, 0x08, 0x8e, 0);
   set_idt(21, isr21asm, 0x08, 0x8e, 0);
+  set_idt(32,irq0asm,0x08, 0x08e, 0);
   set_idt(33, irq1asm, 0x8, 0x8e, 0);
 }
 __attribute__((section(".text.kernel_main")))
 void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
+    asm("cli");
+    load_GDT();
     load_IDT();
     IDTs();
+    asm("sti");
     geral_pic();
     gop(Gop);
-    init_console();
-    uint32_t *fb = (uint32_t *)Gop->FrameBufferBase;
-    uint32_t totalPixels = Gop->PixelsPerScanLine * Gop->HeightResolution;
-    for (uint32_t i = 0; i < totalPixels; i++) {
-        fb[i] = 0x12456; //powershell classic colorcolor
-    }
+    init_console(Gop);
     //FAZER ; : !  e todos os sinais restantes em font.h
-    kprintf("Hello World");  
-   
     asm volatile("sti");
-        while (1) {
-        __asm__ volatile("hlt");
+    while (1) {
+        asm volatile("hlt");
         asm("cli");
 
-        if (last_key != 0) {
+        if (last_key != 0){
         set_color(WHITE);
         gop_putchar(last_key);
-
         last_key = 0;
-    }
+        }
         asm("sti");
-  } 
-}
+    } 
+} 

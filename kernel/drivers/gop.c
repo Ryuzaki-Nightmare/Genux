@@ -27,17 +27,22 @@ void gop(EFI_GOP_INFORMATION *gop){
  *GOP OFFSET
  *Offset in Bytes = (Y * PixelsPerScanLine + X) * 4
  * */
-void init_console(void){
+void init_console(EFI_GOP_INFORMATION *Gop){
+    uint32_t *fb = (uint32_t *)Gop->FrameBufferBase;
+    uint32_t totalPixels = Gop->PixelsPerScanLine * Gop->HeightResolution;
+
     FrameBuffer = (uint32_t *) FrameBufferBase;
+    set_color(GREEN);
+    kprintf("$");
     set_color(WHITE);
+
 }
 void set_color(uint64_t colour){
     color = colour;
 }
 void gop_putchar(char c) {
     if (c == 8) {  // backspace
-    
-        return;
+        backspace();
     }
 
     
@@ -46,7 +51,8 @@ void gop_putchar(char c) {
         newline();
         shell(); // call func "shell" in kernel/terminal/shell.c
         set_color(GREEN);
-        kprintf(">");
+        newline();
+        kprintf("$");
         memset(teclas,0,sizeof(teclas)); /*Zera array do teclado para comecar dnv a contagem*/
         teclas_count = 0;
         
@@ -54,10 +60,26 @@ void gop_putchar(char c) {
 
     }
     if (c == 9) {  // tab   go to next  multiple of  4
-        
+        X += 32;
         return;
+    }else{
+        kputchar(c);
     }
-  }
+}
+void backspace(void){
+    if(X >= 16){
+        X -= 8;
+    }
+    for(int i = 0; i < 16;i++){
+        for(int j = 0 ;j < 8; j ++){
+            set_color(BLACK);
+            plot_pixel(X+ j, Y + i);
+        }
+    }
+    if(teclas_count > 0 )
+        teclas[--teclas_count] = 0;
+    X -= 8;
+}
 void kputchar(char c) {
     uint32_t byte_line;
     uint32_t pixel_x;
@@ -67,7 +89,7 @@ void kputchar(char c) {
     }
     for(int i = 0 ;i < 16;i++){
         uint8_t byte_line = font[(unsigned char)c][i];
-        byte_line = byte_line | (byte_line >> 1);
+        //byte_line = byte_line | (byte_line >> 1);
         for(int bit = 7; bit >= 0 ; bit--){
             if(((byte_line >> bit)& 1 ) == 1) {
                 pixel_x = X + (7-bit);
@@ -93,6 +115,7 @@ void print(const char* s) {
  void newline(void) {
         X = -8;
         Y += 8;
+        X = 0;
  
 }
  void put_cell(char c) {

@@ -1,3 +1,5 @@
+;This archive 
+
 ;extern
 extern isr0
 extern isr1
@@ -37,6 +39,10 @@ extern irq12
 extern irq13
 extern irq14
 extern irq15
+
+
+
+
 global isr0asm
 global isr1asm
 global isr2asm
@@ -59,6 +65,7 @@ global isr18asm
 global isr19asm
 global isr20asm
 global isr21asm
+global irq0asm
 global irq1asm
 
 %macro  pushad 0 ;macro func pushad em 64bits
@@ -212,6 +219,15 @@ isr20asm:
 isr21asm:
     pushad
     call isr21
+    popad
+    iretq
+irq0asm:
+    ; 1.193182mhz -> PIT
+    ; Five modes
+    pushad 
+    call irq0
+    mov al,0x20
+    out 0x20,al ; EOI
     popad
     iretq
 irq1asm:;func teclado

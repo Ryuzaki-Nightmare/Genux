@@ -10,7 +10,7 @@ extern void load_IDT(void);
 void set_idt(int vector, void *isr_handler, uint16_t selector, uint8_t flags, uint8_t ist);
 
 
-// Exceções da CPU
+// CPUs Exections
 extern void isr0(void);   // #DE  Division Error
 extern void isr1(void);   // #DB  Debug
 extern void isr2(void);   // NMI  Non-Maskable Interrupt
@@ -58,10 +58,10 @@ extern void isr18asm(void);
 extern void isr19asm(void);
 extern void isr20asm(void);
 extern void isr21asm(void);
-
+extern void irq0asm(void);
 // IRQs (vetor = IRQ + 32)
 void irq0(void);   // Timer
-void irq1();   // Teclado
+void irq1();   // Keyboard
 void irq2(void);   // Cascade
 void irq3(void);   // COM2
 void irq4(void);   // COM1
@@ -74,8 +74,8 @@ void irq10(void);  // Livre
 void irq11(void);  // Livre
 void irq12(void);  // Mouse PS/2
 void irq13(void);  // FPU
-void irq14(void);  // ATA Primário
-void irq15(void);  // ATA Secundário
+void irq14(void);  // ATA fisrt
+void irq15(void);  // ATA Second
 
 
 #endif

@@ -67,9 +67,10 @@ $(BUILD_DIR)/%.o: %.asm always
 	mkdir -p $(dir $@)
 	$(ASM) -f elf64 $< -o $@
 kernel: always Compile $(ASM_OBJECTS) $(C_OBJECTS)
-	$(CC) -m64 -ffreestanding -nostdlib -no-pie -T linker.ld -Wl,--oformat=binary \
+	$(CC) -m64 -ffreestanding -nostdlib -no-pie -T linker.ld \
 		$(ASM_OBJECTS) $(C_OBJECTS) \
-		-o $(BUILD_DIR)/Genux.bin
+		-o $(BUILD_DIR)/Genux.elf
+	objcopy -O binary $(BUILD_DIR)/Genux.elf $(BUILD_DIR)/Genux.bin
 	cp $(BUILD_DIR)/Genux.bin $(BUILD_DIR)/esp/Genux.bin
 #in run, put -biod /your/path/to/OVM.4m.f
 #in -m, put how many ram you want use
