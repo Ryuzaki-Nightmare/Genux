@@ -28,9 +28,6 @@ void gop(EFI_GOP_INFORMATION *gop){
  *Offset in Bytes = (Y * PixelsPerScanLine + X) * 4
  * */
 void init_console(EFI_GOP_INFORMATION *Gop){
-    uint32_t *fb = (uint32_t *)Gop->FrameBufferBase;
-    uint32_t totalPixels = Gop->PixelsPerScanLine * Gop->HeightResolution;
-
     FrameBuffer = (uint32_t *) FrameBufferBase;
     set_color(GREEN);
     kprintf("$");
@@ -118,6 +115,16 @@ void print(const char* s) {
         X = 0;
  
 }
- void put_cell(char c) {
+void put_cell(char c) {
  
+}
+void clear(){
+    uint32_t *fb = (uint32_t *)FrameBufferBase;
+    uint32_t totalPixels = PixelsPerScanLine * Height;
+    for (uint32_t i = 0; i < totalPixels; i++) {
+        fb[i] = BLACK; //red
+    }
+    X = 0;
+    Y = -11;
+    
 }

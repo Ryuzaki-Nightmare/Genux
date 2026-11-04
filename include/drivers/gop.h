@@ -30,4 +30,5 @@ void put_cell(char c);
 void gop(EFI_GOP_INFORMATION *gop);
 void plot_pixel(uint32_t x,uint32_t y);
 void init_console(EFI_GOP_INFORMATION *Gop);
+void clear();
 #endif

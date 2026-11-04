@@ -24,12 +24,15 @@ void shell(void) {
    else if(strncmp(teclas,"genux",5) == 0){
         set_color(RED);
         kprintf("You're using Genux OS by a person\n");
+ }
+  else if (strncmp(teclas,"clear",5) == 0 ){
+        clear();
     }
     
-  else
+    else
   {
-
     set_color(RED);
     kprintf("Unknown command\n");
   }
+
 }
