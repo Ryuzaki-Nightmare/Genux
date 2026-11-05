@@ -40,6 +40,7 @@ void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
     geral_pic();
     gop(Gop);
     init_console(Gop);
+    init_pmm(Info);
     //FAZER ; : !  e todos os sinais restantes em font.h
     asm volatile("sti");
     while (1) {
