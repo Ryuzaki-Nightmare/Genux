@@ -7,11 +7,23 @@
 typedef unsigned long long EFI_PHYSICAL_ADDRESS;
 typedef unsigned long long EFI_VIRTUAL_ADDRESS;
 typedef enum{
-    AllocateAnyPage,
-    AllocateMaxAddress,
-    AllocateAddress,
-    MaxAllocateType
-} ALLOCATE_TYPE;
+    EfiReservedMemoryTime,
+    EfiLoaderCode,
+    EfiLoaderData,
+    EfiBootServicesCode,
+    EfiBootServicesData,
+    EfiRuntimeServicesCode,
+    EfiRuntimeServicesData,
+    EfiConventionalMemory,
+    EfiUnusableMemory,
+    EfiACPIReclaimMemory,
+    EfiACPIMemoryNVS,
+    EfiMemoryMappedIO,
+    EfiMemoryMappedIOPortSpace,
+    EfiPersistentMemory,
+    EfiUnacceptedMemoryType,
+    EfiMaxMemoryType
+}EFI_MEMORY_TYPE;
 typedef struct{
     uint32_t Type;
     EFI_PHYSICAL_ADDRESS PhysicalStart;
