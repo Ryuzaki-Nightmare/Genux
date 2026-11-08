@@ -8,26 +8,31 @@ Genux/
 ├── Makefile
 ├── README.MD
 ├── linker.ld
-└──arch
-|    └──x86
+└──arch/
+|    └──x86|
 |        └──x86 basic tools
+|
+└──boot/
+|    └─basic efi bootloader
 └── kernel/
-    ├── kernel.c
-    ├── kernel.h
-    ├── kernel_entry.asm
-    └── libc/
-    |    └── Minimal libc
-    └── terminal/
-            └── terminal archives for shell
-
+|    ├── kernel.c
+|    ├── kernel.h
+|    ├── kernel_entry.asm
+|    └── libc/
+|    |    └── Minimal libc
+|    └── terminal/
+|            └── terminal archives for shell
+|
+└── include/
+        └── all of headers
 ```
 ## Technologies
 ```text
     Assembly X86_64
     C
-    Grub
+    Gnu-Efi
     linker.ld
-    make
+    Makefile
 ```
 ### How to use
 ```text
