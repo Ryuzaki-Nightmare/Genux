@@ -32,6 +32,8 @@ typedef struct{
     uint64_t Attribute;
 } MEMORY_DESCRIPTOR;
 
+
+
 //MEMORY_DESCRIPITOR.Attribute Definitions
 #define EFI_MEMORY_UC              0x0000000000000001
 #define EFI_MEMORY_WC              0x0000000000000002
