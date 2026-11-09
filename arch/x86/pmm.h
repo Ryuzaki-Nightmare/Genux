@@ -4,6 +4,14 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <boot.h>
+union DividedChar {
+    unsigned char full_byte;     
+    struct {
+        unsigned char bit0 : 1; // 1 bit
+        unsigned char bit1 : 1; // 1 bit
+    } bits;
+};
+
 typedef unsigned long long EFI_PHYSICAL_ADDRESS;
 typedef unsigned long long EFI_VIRTUAL_ADDRESS;
 typedef enum{
@@ -54,8 +62,8 @@ typedef struct{
 
 
 void init_pmm(BootInfo Info);
-void pmm_alloc(uint32_t Size);
-
+uint64_t pmm_alloc(uint64_t Size);
+void pmm_free(uint64_t Page,uint64_t Size);
 
 
 #endif
