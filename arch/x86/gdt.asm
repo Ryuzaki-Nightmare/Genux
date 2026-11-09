@@ -1,23 +1,24 @@
-[BITS 64]
-global load_GDT
+format ELF64
+public load_GDT
 
+section '.text' executable
 load_GDT:
     lgdt [gdtr]
-    push 0x08                 
-    lea rax, [.label]         
-    push rax                     
-    retfq       
+    push 0x08
+    lea rax, [.label]
+    push rax
+    retfq
 
 .label:
-    mov ax, 0x10               
+    mov ax, 0x10
     mov ds, ax
     mov es, ax
     mov ss, ax
-    xor ax, ax                 
+    xor ax, ax
     mov fs, ax
     mov gs, ax
-    ret 
-
+    ret
+section '.data' writeable
 gdtr:
     dw gdt_end - gdt_start -1
     dq gdt_start

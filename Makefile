@@ -1,8 +1,8 @@
-ASM = nasm
+ASM = fasm
 CC = gcc
 SRC_DIR = kernel
 BUILD_DIR = build
-INC_DIR = -Iinclude -Iarch/x86 -Ikernel/terminal -Iinclude/drivers -Iboot  
+INC_DIR = -Iinclude -Iarch/x86 -Ikernel/terminal -Iinclude/drivers -Iboot -Imm
 #INC_DIR são diretorios que fazem parte da libc para include, por exemplo, #include <stdlib.h>
 log = qemu.log
 
@@ -13,12 +13,12 @@ ASM_SOURCES := $(shell find $(SRC_DIR) arch -name "*.asm")
 ASM_OBJECTS := $(patsubst %.asm, $(BUILD_DIR)/%.o, $(ASM_SOURCES))
 
 
-#Arquivo de entrada 
-.PHONY:  kernel clean always run 
+#Arquivo de entrada
+.PHONY:  kernel clean always run
 all: always
 
 
-Compile: 
+Compile:
 	mkdir -p build
 	$ gcc boot/boot.c                \
 	-c                                 \
@@ -65,7 +65,7 @@ $(BUILD_DIR)/%.o: %.c always
 
 $(BUILD_DIR)/%.o: %.asm always
 	mkdir -p $(dir $@)
-	$(ASM) -f elf64 $< -o $@
+	$(ASM) $< $@
 kernel: always Compile $(ASM_OBJECTS) $(C_OBJECTS)
 	$(CC) -m64 -ffreestanding -nostdlib -no-pie -T linker.ld \
 		$(ASM_OBJECTS) $(C_OBJECTS) \

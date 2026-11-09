@@ -1,74 +1,76 @@
-;This archive 
-
+format ELF64
 ;extern
-extern isr0
-extern isr1
-extern isr2
-extern isr3
-extern isr4
-extern isr5
-extern isr6
-extern isr7
-extern isr8
-extern isr9
-extern isr10
-extern isr11
-extern isr12
-extern isr13
-extern isr14
-extern isr15
-extern isr16
-extern isr17
-extern isr18
-extern isr19
-extern isr20
-extern isr21
-extern irq0
-extern keyboard
-extern irq2
-extern irq3
-extern irq4
-extern irq5
-extern irq6
-extern irq7
-extern irq8
-extern irq9
-extern irq10
-extern irq11
-extern irq12
-extern irq13
-extern irq14
-extern irq15
 
 
 
+extrn isr0
+extrn isr1
+extrn isr2
+extrn isr3
+extrn isr4
+extrn isr5
+extrn isr6
+extrn isr7
+extrn isr8
+extrn isr9
+extrn isr10
+extrn isr11
+extrn isr12
+extrn isr13
+extrn isr14
+extrn isr15
+extrn isr16
+extrn isr17
+extrn isr18
+extrn isr19
+extrn isr20
+extrn isr21
+extrn irq0
+extrn keyboard
+extrn irq2
+extrn irq3
+extrn irq4
+extrn irq5
+extrn irq6
+extrn irq7
+extrn irq8
+extrn irq9
+extrn irq10
+extrn irq11
+extrn irq12
+extrn irq13
+extrn irq14
+extrn irq15
 
-global isr0asm
-global isr1asm
-global isr2asm
-global isr3asm
-global isr4asm
-global isr5asm
-global isr6asm
-global isr7asm
-global isr8asm
-global isr9asm
-global isr10asm
-global isr11asm
-global isr12asm
-global isr13asm
-global isr14asm
-global isr15asm
-global isr16asm
-global isr17asm
-global isr18asm
-global isr19asm
-global isr20asm
-global isr21asm
-global irq0asm
-global irq1asm
+public isr0asm
+public isr1asm
+public isr2asm
+public isr3asm
+public isr4asm
+public isr5asm
+public isr6asm
+public isr7asm
+public isr8asm
+public isr9asm
+public isr10asm
+public isr11asm
+public isr12asm
+public isr13asm
+public isr14asm
+public isr15asm
+public isr16asm
+public isr17asm
+public isr18asm
+public isr19asm
+public isr20asm
+public isr21asm
+public irq0asm
+public irq1asm
 
-%macro  pushad 0 ;macro func pushad em 64bits
+;64 Bits Macro!!
+
+
+macro pushad{
 
     push rax
     push rbx
@@ -85,9 +87,10 @@ global irq1asm
     push r13
     push r14
     push r15
-%endmacro
+}
 
-%macro popad 0 ; macro func popad 64bits
+macro popad{
+; macro func popad 64bits
     pop r15
     pop r14
     pop r13
@@ -103,15 +106,15 @@ global irq1asm
     pop rcx
     pop rbx
     pop rax
-
-%endmacro
+}
+section '.text' executable
 isr0asm:
     pushad
     call isr0
     popad
     iretq
 isr1asm:
-    pushad 
+    pushad
     call isr1
     popad
     iretq
@@ -200,7 +203,7 @@ isr17asm:
     pushad
     call isr17
     popad
-    iretq   
+    iretq
 isr18asm:
     pushad
     call isr18
@@ -224,7 +227,7 @@ isr21asm:
 irq0asm:
     ; 1.193182mhz -> PIT
     ; Five modes
-    pushad 
+    pushad
     call irq0
     mov al,0x20
     out 0x20,al ; EOI
@@ -234,7 +237,7 @@ irq1asm:;func teclado
     pushad ; salva register
     in al, 0x60
 
-    
+
     movzx rdi,al
 
     call keyboard
@@ -244,7 +247,7 @@ irq1asm:;func teclado
     popad ;pusha resister
     iretq
 
-    ;Irq a Fazer    
+    ;Irq a Fazer
     ;irq2
     ;irq3
     ;irq4
@@ -259,6 +262,3 @@ irq1asm:;func teclado
     ;irq13
     ;irq14
     ;irq15
-section .note.GNU-stack noalloc noexec nowrite progbits
-
-    
