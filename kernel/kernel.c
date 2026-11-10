@@ -3,6 +3,7 @@
 #include <boot.h>
 volatile char last_key = 0;
 extern void load_GDT();
+extern void init_mmu();
 void IDTs(void) {
 
   set_idt(0, isr0asm, 0x08, 0x8E, 0);
@@ -41,6 +42,7 @@ void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
     gop(Gop);
     init_console(Gop);
     init_pmm(Info);
+    init_mmu();
     //FAZER ; : !  e todos os sinais restantes em font.h
     asm volatile("sti");
     while (1) {

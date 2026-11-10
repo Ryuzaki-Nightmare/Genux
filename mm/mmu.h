@@ -1,5 +1,6 @@
 #ifndef MMU_H
 #define MMU_H
-#include <stdint.h> 
-
-#endif 
+extern void mmu_init();
+extern void paging();
+void init_mmu(void);
+#endif

@@ -6,10 +6,10 @@ INC_DIR = -Iinclude -Iarch/x86 -Ikernel/terminal -Iinclude/drivers -Iboot -Imm
 #INC_DIR são diretorios que fazem parte da libc para include, por exemplo, #include <stdlib.h>
 log = qemu.log
 
-C_SOURCES := $(shell find $(SRC_DIR) arch  -name "*.c")
+C_SOURCES := $(shell find $(SRC_DIR) arch mm -name "*.c")
 C_OBJECTS := $(patsubst %.c, $(BUILD_DIR)/%.o, $(C_SOURCES))
 
-ASM_SOURCES := $(shell find $(SRC_DIR) arch -name "*.asm")
+ASM_SOURCES := $(shell find $(SRC_DIR) arch mm -name "*.asm")
 ASM_OBJECTS := $(patsubst %.asm, $(BUILD_DIR)/%.o, $(ASM_SOURCES))
 
 
