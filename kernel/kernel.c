@@ -1,6 +1,7 @@
 // Kernel Main Archive
 #include "kernel.h"
 #include <boot.h>
+#include <mmu.h>
 volatile char last_key = 0;
 extern void load_GDT();
 extern void init_mmu();
@@ -37,15 +38,13 @@ void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
     load_GDT();
     load_IDT();
     IDTs();
-    asm("sti");
     geral_pic();
     gop(Gop);
     init_console(Gop);
     init_pmm(Info);
     init_mmu();
-    //FAZER ; : !  e todos os sinais restantes em font.h
-    asm volatile("sti");
-    while (1) {
+    asm("sti");
+        while (1) {
         asm volatile("hlt");
         asm("cli");
 
