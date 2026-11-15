@@ -9,22 +9,24 @@ Genux/
 ├── README.MD
 ├── linker.ld
 └──arch/
-|    └──x86|
-|        └──x86 basic tools
+|    └──x86/
+|        └──x86 basic archives 
 |
 └──boot/
 |    └─basic efi bootloader
 └── kernel/
 |    ├── kernel.c
 |    ├── kernel.h
-|    ├── kernel_entry.asm
 |    └── libc/
 |    |    └── Minimal libc
 |    └── terminal/
 |            └── terminal archives for shell
 |
 └── include/
-        └── all of headers
+|        └── all of headers
+|
+└── mm/
+     └── memory management
 ```
 ## Technologies
 ```text
