@@ -37,7 +37,7 @@ Genux/
 ### How to use
 ```text
     sudo apt update
-    sudo apt install -y make nasm qemu-system-x86 gcc binutils
+    sudo apt install -y make fasm qemu-system-x86 gcc binutils
     git clone https://github.com/Ryuzaki-Nightmare/Genux.git 
     cd Genux
     make clean && make run
