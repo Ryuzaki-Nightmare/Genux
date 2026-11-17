@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 void init_mmu(void){
-    mmu_init();
+    paging();
     //kprintf("GG in Initial Paging and MMu");
 }
 
