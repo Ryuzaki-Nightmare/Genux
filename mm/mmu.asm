@@ -1,14 +1,18 @@
 format ELF64
 public mmu_init
 public paging
-
+extrn zero_pml4
 section '.bss' writable align 4096
-pml4_table:
+align 4096
+pml4: 
     rb 4096
-pdpt_table:
+pdpt:
     rb 4096
-pd_table:
+pt: 
     rb 4096
+pd: 
+     rb 4096
+
 section '.data' writable
 P equ (1 shl  0) ; Bit 0, Present Flag
 RW equ (1 shl 1); Bit 1, Read/Write Flag
@@ -18,7 +22,7 @@ ID equ (1 shl 4) ; Bit 4, is the Instruction/Data flag (1=instruction fetch, 0=d
 PK equ (1 shl 5); Bit 5, indicates a protection-key violation
 SS equ (1 shl 6); Bit 6, indicates a shadow-stack access fault
 SGX equ (1 shl 15); Bit 7, indicates an SGX violaton
-
+ADDR_MASK equ 0x000FFFFFFFFFF000; mask bits 12 to 51
 Mode_enable equ (1 shl 8) ; This is MSR
 PSE equ (1 shl 4)
 PAE equ (1 shl 5)
@@ -29,23 +33,14 @@ PE equ (1 shl 0)
 PG equ (1 shl 31)
 
 
+
 section '.text' executable
+apml4:
+    mov pml4,rdi
+    call zero_pml4
 setup_page_tables:
-      mov rax, pdpt_table
-    or rax, 11b             
-    mov [pml4_table], rax
-    
-   
-    mov rax, pd_table
-    or rax, 11b            
-    mov [pdpt_table], rax
+    ; set pml4 and apply 
 
-   
-    mov rax, 0x0           
-    or rax, 10000011b     
-    mov [pd_table], rax
-
-    ret
 paging:
     mov rax, pml4_table
     mov cr3, rax
