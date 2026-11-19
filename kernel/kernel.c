@@ -3,7 +3,7 @@
 #include <boot.h>
 #include <mmu.h>
 volatile char last_key = 0;
-
+extern void load_GDT();
 void IDTs(void) {
 
   set_idt(0, isr0asm, 0x08, 0x8E, 0);
@@ -35,7 +35,7 @@ __attribute__((section(".text.kernel_main")))
 void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
     asm("cli");
     init_pmm(Info);
-    init_mmu() ;
+    load_GDT();
     load_IDT();
     IDTs();
     geral_pic();
