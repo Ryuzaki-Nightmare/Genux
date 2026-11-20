@@ -30,7 +30,7 @@ Genux/
 ```
 ## Technologies
 ```text
-    Assembly X86_64
+    Assembly X86_64 (Fasm)
     C
     Gnu-Efi
     linker.ld
