@@ -1,7 +1,7 @@
 // Kernel Main Archive
 #include "kernel.h"
 #include <boot.h>
-#include <mmu.h>
+
 volatile char last_key = 0;
 extern void load_GDT();
 void IDTs(void) {
@@ -35,6 +35,7 @@ __attribute__((section(".text.kernel_main")))
 void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
     asm("cli");
     init_pmm(Info);
+    init_vmm();
     load_GDT();
     load_IDT();
     IDTs();
