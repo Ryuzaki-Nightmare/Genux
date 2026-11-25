@@ -28,6 +28,7 @@ void gop(EFI_GOP_INFORMATION *gop){
  *Offset in Bytes = (Y * PixelsPerScanLine + X) * 4
  * */
 void init_console(EFI_GOP_INFORMATION *Gop){
+    gop(Gop);
     FrameBuffer = (uint32_t *) FrameBufferBase;
     set_color(GREEN);
     kprintf("$");

@@ -34,14 +34,14 @@ void IDTs(void) {
 __attribute__((section(".text.kernel_main")))
 void kernel_main(EFI_GOP_INFORMATION *Gop,GENUX_TIME time,BootInfo Info) {
     asm("cli");
+    init_console(Gop);
     init_pmm(Info);
     init_vmm();
+    kprintf("Hello");
     load_GDT();
     load_IDT();
     IDTs();
     geral_pic();
-    gop(Gop);
-    init_console(Gop);
     asm("sti");
         while (1) {
         asm volatile("hlt");
